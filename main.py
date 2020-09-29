@@ -62,14 +62,16 @@ Shops = [amazon, otto, expert, gamestop]
 def checkShop(name, url, nonavibstr, attrib, classname):
     response = requests.get(url, headers=headers, verify=False)
     soup = BeautifulSoup(response.content, "lxml")
-    avail = soup.find(attrib, {"class": classname})
-    value = avail.string
-    ava = "NO"
-    if (value.strip()) != nonavibstr:
-        ava = "YES"
-        telegram_send.send(
-            messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
-
+    avail = soup.find(attrib, class_= classname)
+    try:
+        value = avail.string
+        ava = "NO"
+        if (value.strip()) != nonavibstr:
+            ava = "YES"
+            telegram_send.send(
+                messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
+    except:
+        ava = "Bot detected"
     return ava
 
 
@@ -79,5 +81,5 @@ while True:
         print(i.name + " " + checkShop(i.name, i.url,
                                        i.nonavibstr, i.attrib, i.classname))
 
-    time.sleep(5)
+    time.sleep(60)
     pass
