@@ -1,11 +1,14 @@
 import telegram_send
 from bs4 import BeautifulSoup
 import time
+import datetime
 import requests
+import logging as log
 requests.packages.urllib3.disable_warnings()
 import random
 
 randomint = random.randrange(0,55)
+randomwait = random.randrange(1,10)
 agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/517.{} (KHTML, like Gecko) Chrome/79.0.3945.88".format(randomint)
 
 headers = {'User-Agent': agent}
@@ -55,31 +58,39 @@ gamestop = Shop(
     "a",
     "megaButton buyDisabled")
 
+alternate = Shop(
+    "Alternate",
+    "https://www.alternate.de/Sony-Interactive-Entertainment/PlayStation-5-Digital-Edition-Spielkonsole/html/product/1676873",
+    "Artikel kann nicht gekauft werden",
+    "p",
+    "stockStatus noSeparateSale")
 
-Shops = [amazon, otto, expert, gamestop]
+Shops = [amazon, otto, expert, gamestop, alternate]
 
 
 def checkShop(name, url, nonavibstr, attrib, classname):
     response = requests.get(url, headers=headers, verify=False)
     soup = BeautifulSoup(response.content, "lxml")
     avail = soup.find(attrib, class_= classname)
+    ava = "NO"
     try:
-        value = avail.string
-        ava = "NO"
-        if (value.strip()) != nonavibstr:
-            ava = "YES"
-            telegram_send.send(
-                messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
+        if avail is not None:
+            value = avail.string
+            if (value.strip()) != nonavibstr:
+                ava = "YES"
+                telegram_send.send(
+                    messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
     except:
         ava = "Bot detected"
     return ava
 
-
+print("Lurking for PS5 availibility...")
+print([i.name for i in Shops])
 while True:
 
     for i in Shops:
-        print(i.name + " " + checkShop(i.name, i.url,
-                                       i.nonavibstr, i.attrib, i.classname))
+        if [checkShop(i.name, i.url, i.nonavibstr, i.attrib, i.classname)] == "YES":
+            print(i.name )
 
-    time.sleep(60)
+    time.sleep(randomwait * 60)
     pass
