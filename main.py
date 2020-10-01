@@ -2,10 +2,20 @@ import telegram_send
 from bs4 import BeautifulSoup
 import time
 import datetime
+import os.path as path
 import requests
 import logging as log
 requests.packages.urllib3.disable_warnings()
 import random
+
+
+if path.exists("/telegram.conf"):
+    telegram_send.configure('/telegram.conf')
+else:
+    print("telegram_send configuration not found")
+    exit(1)
+
+
 
 randomint = random.randrange(0,55)
 randomwait = random.randrange(1,10)
