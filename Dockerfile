@@ -4,4 +4,4 @@ COPY requirements.txt /app/req.txt
 COPY main.py /app/main.py
 WORKDIR /app/
 RUN pip install --no-cache-dir -r req.txt
-CMD [ "python", "-u", "./main.py" ]
+CMD telegram-send --config /telegram.conf && python -u ./main.py

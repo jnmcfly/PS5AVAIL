@@ -11,6 +11,7 @@ import random
 
 if path.exists("/telegram.conf"):
     telegram_send.configure('/telegram.conf')
+
 else:
     print("telegram_send configuration not found")
     exit(1)
