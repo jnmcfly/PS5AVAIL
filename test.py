@@ -21,29 +21,34 @@ class Shop:
 
 
 otto = Shop(
-    "Alternate",
-    "https://www.alternate.de/Sony-Interactive-Entertainment/PlayStation-5-Digital-Edition-Spielkonsole/html/product/1676873",
-    "Artikel kann nicht gekauft werden",
-    "p",
-    "stockStatus noSeparateSale")
+    "Otto",
+    "https://www.otto.de/p/playstation-5-1154028000/",
+    "x",
+    "button",
+    "p_message__button js_message__close")
+
 
 
 def checkShop(name, url, nonavibstr, attrib, classname):
     response = requests.get(url, headers=headers, verify=False)
-    soup = BeautifulSoup(response.content, "lxml")
-    avail = soup.find(attrib, class_= classname)
-    ava = "NO"
-    try:
-        if avail is not None:
-            value = avail.string
-            if (value.strip()) != nonavibstr:
-                ava = "YES"
-                telegram_send.send(
-                    messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
-    except:
-        ava = "Bot detected"
+    if response.history:
+        ava = "NO"
+    else:
+        soup = BeautifulSoup(response.content, "html.parser")
+        avail = soup.find(attrib, class_= classname)
+        ava = "NO"
+        try:
+            if avail is not None:
+                value = avail.string
+                if (value.strip()) != nonavibstr:
+                    ava = "YES"
+                    telegram_send.send(
+                        messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
+        except:
+            ava = "Bot detected"
     return ava
 
 
 
 print(otto.name + " " + checkShop(otto.name, otto.url, otto.nonavibstr, otto.attrib, otto.classname))
+

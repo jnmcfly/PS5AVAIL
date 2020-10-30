@@ -8,16 +8,6 @@ import logging as log
 requests.packages.urllib3.disable_warnings()
 import random
 
-
-if path.exists("/telegram.conf"):
-    telegram_send.configure('/telegram.conf')
-
-else:
-    print("telegram_send configuration not found")
-    exit(1)
-
-
-
 randomint = random.randrange(0,55)
 randomwait = random.randrange(1,10)
 agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/517.{} (KHTML, like Gecko) Chrome/79.0.3945.88".format(randomint)
@@ -81,18 +71,21 @@ Shops = [amazon, otto, expert, gamestop, alternate]
 
 def checkShop(name, url, nonavibstr, attrib, classname):
     response = requests.get(url, headers=headers, verify=False)
-    soup = BeautifulSoup(response.content, "lxml")
-    avail = soup.find(attrib, class_= classname)
-    ava = "NO"
-    try:
-        if avail is not None:
-            value = avail.string
-            if (value.strip()) != nonavibstr:
-                ava = "YES"
-                telegram_send.send(
-                    messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
-    except:
-        ava = "Bot detected"
+    if response.history:
+        ava = "NO"
+    else:
+        soup = BeautifulSoup(response.content, "html.parser")
+        avail = soup.find(attrib, class_= classname)
+        ava = "NO"
+        try:
+            if avail is not None:
+                value = avail.string
+                if (value.strip()) != nonavibstr:
+                    ava = "YES"
+                    telegram_send.send(
+                        messages=["PS5 Verfügbar bei " + name + " Klick hier: " + url])
+        except:
+            ava = "Bot detected"
     return ava
 
 print("Lurking for PS5 availibility...")

@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-slim-buster
 LABEL MAINTAINER="jnmcfly"
 COPY requirements.txt /app/req.txt
 COPY main.py /app/main.py
