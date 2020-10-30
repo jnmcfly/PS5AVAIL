@@ -55,7 +55,7 @@ expert = Shop(
 gamestop = Shop(
     "GameStop",
     "https://www.gamestop.de/PS5/Games/58665#",
-    "Out of stock",
+    "Nicht verfügbar",
     "a",
     "megaButton buyDisabled")
 
