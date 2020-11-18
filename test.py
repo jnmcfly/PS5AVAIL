@@ -20,12 +20,13 @@ class Shop:
         self.classname = classname
 
 
-otto = Shop(
-    "Otto",
-    "https://www.otto.de/p/playstation-5-1154028000/",
-    "x",
-    "button",
-    "p_message__button js_message__close")
+amazon = Shop(
+    "Amazon",
+    "https://www.amazon.de/Sony-Interactive-Entertainment-PlayStation-5/dp/B08H93ZRK9?ref_=ast_sto_dp",
+    "Derzeit nicht verfügbar.",
+    "span",
+    "a-size-medium a-color-price")
+
 
 
 
@@ -36,6 +37,7 @@ def checkShop(name, url, nonavibstr, attrib, classname):
     else:
         soup = BeautifulSoup(response.content, "html.parser")
         avail = soup.find(attrib, class_= classname)
+        print(avail)
         ava = "NO"
         try:
             if avail is not None:
@@ -49,6 +51,5 @@ def checkShop(name, url, nonavibstr, attrib, classname):
     return ava
 
 
-
-print(otto.name + " " + checkShop(otto.name, otto.url, otto.nonavibstr, otto.attrib, otto.classname))
+print(amazon.name + " " + checkShop(amazon.name, amazon.url, amazon.nonavibstr, amazon.attrib, amazon.classname))
 

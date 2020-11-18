@@ -26,7 +26,7 @@ class Shop:
 
 amazon = Shop(
     "Amazon",
-    "https://www.amazon.de/dp/B08H93ZRK9/ref=twister_B08JVHJNHG?_encoding=UTF8&psc=1",
+    "https://www.amazon.de/Sony-Interactive-Entertainment-PlayStation-5/dp/B08H93ZRK9?ref_=ast_sto_dp",
     "Derzeit nicht verfügbar.",
     "span",
     "a-size-medium a-color-price")
@@ -96,5 +96,5 @@ while True:
         if [checkShop(i.name, i.url, i.nonavibstr, i.attrib, i.classname)] == "YES":
             print(i.name )
 
-    time.sleep(randomwait * 60)
+    time.sleep(30)
     pass
