@@ -23,7 +23,7 @@ make sure to replace token and chat_id with your own values.
 
 ### run (once)
 
-`docker run --name klopypier -d -v $(pwd)/telegram-send.conf:/root/.config/telegram-send.conf ps5avail:latest`
+`docker run --name ps5avail -d -v $(pwd)/telegram-send.conf:/root/.config/telegram-send.conf ps5avail:latest`
 
 ### run (another run)
 
