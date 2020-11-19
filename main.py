@@ -24,12 +24,12 @@ class Shop:
         self.classname = classname
 
 
-amazon = Shop(
-    "Amazon",
-    "https://www.amazon.de/Sony-Interactive-Entertainment-PlayStation-5/dp/B08H93ZRK9?ref_=ast_sto_dp",
-    "Derzeit nicht verfügbar.",
-    "span",
-    "a-size-medium a-color-price")
+# amazon = Shop(
+#     "Amazon",
+#     "https://www.amazon.de/dp/B08H93ZRK9/ref=twister_B08JVHJNHG?_encoding=UTF8&th=1",
+#     "Derzeit nicht verfügbar.",
+#     "span",
+#     "a-size-medium a-color-price")
 
 otto = Shop(
     "Otto",
@@ -55,7 +55,7 @@ expert = Shop(
 gamestop = Shop(
     "GameStop",
     "https://www.gamestop.de/PS5/Games/58665#",
-    "Nicht verfügbar",
+    "Derzeit nicht Verfügbar",
     "a",
     "megaButton buyDisabled")
 
@@ -66,7 +66,7 @@ alternate = Shop(
     "p",
     "stockStatus noSeparateSale")
 
-Shops = [amazon, otto, expert, gamestop, alternate]
+Shops = [otto, expert, gamestop, alternate]
 
 
 def checkShop(name, url, nonavibstr, attrib, classname):
